@@ -89,13 +89,16 @@ function ML:AHGetAuctionInfoByLink(itemLink)
   if not ikey then
     return {error = "INVALID_ITEM_LINK"}
   end
+  -- which is itemDB_2
   local idb = self.savedVar[self.itemDBKey]
   self:Debug(8, "AHGetAuctionInfoByLink for " .. itemLink .. " (%) itemDBkey %", ikey, self.itemDBKey)
+--  print("ahbot stub 2 ikey", ikey)
   if not idb or not idb[ikey] then
     return {error = "UNKNOWN_ITEM"}
   end
   local resCache = self.ahAuctionInfoCache.resCache
   if resCache[ikey] then
+--    print("ahbot stub 3 print resCache", pt(resCache[ikey]))
     return resCache[ikey]
   end
   local ahKeyedResult = self.ahAuctionInfoCache.ahKeyedResult
@@ -108,6 +111,14 @@ function ML:AHGetAuctionInfoByLink(itemLink)
     res.minBuyout = nil
     res.numAuctions = 0
     res.numSellers = 0
+    -- ahbot
+    local itemStats = self.savedVar["itemStats"]
+    local key = string.sub(ikey, 2)
+    local market3, market14, maxStock = itemStats[key]:match("^(.*),(.*),(.*)$")
+    res.market3 = self:ahStrToNum(market3)
+    res.market14 = self:ahStrToNum(market14)
+    res.maxStock = self:ahStrToNum(maxStock)
+    -- ahbot
     for seller, auctionsBySeller in pairs(res.rawData) do
       res.numSellers = res.numSellers + 1
       if #seller == 0 then
@@ -139,6 +150,7 @@ function ML:AHGetAuctionInfoByLink(itemLink)
   else
     res.found = false
   end
+--  print("ahbot stub 5 set cache", res.minBid, res.minBuyout)
   resCache[ikey] = res
   self:Debug(1, "AHGetAuctionInfoByLink for " .. itemLink .. " (%) is %", ikey, res)
   return res
@@ -707,6 +719,7 @@ end
 
 -- called by addon after we call it with restored saved vars (!)
 function ML:AHRestoreData()
+--  print("ahbot stub 0 load data")
   if not self.savedVar or not self.savedVar.ah or #self.savedVar.ah == 0 then
     return
   end
@@ -730,3 +743,5 @@ end
 function ML:AHendOfScanCB()
   self:Debug("Default non overridden AHendOfScanCB()")
 end
+
+--function pt(t) for k, v in pairs(t) do print(k, type(v) ,v) end end
