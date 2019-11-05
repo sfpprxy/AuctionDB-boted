@@ -1,5 +1,5 @@
 ## Interface: 11302
-## Title: Auction House DataBase (AHDB)
+## Title: [地精传送器] |cFF0099FF连接器|r
 ## Notes: Auction House DataBase, records DB history and offline queries, for classic and more (|cFF99E5FF/ahdb|r)
 ## Author: MooreaTV moorea@ymail.com
 ## Version: v1.01.04
