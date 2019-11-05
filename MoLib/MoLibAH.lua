@@ -113,11 +113,13 @@ function ML:AHGetAuctionInfoByLink(itemLink)
     res.numSellers = 0
     -- ahbot
     local itemStats = self.savedVar["itemStats"]
-    local key = string.sub(ikey, 2)
-    local market3, market14, maxStock = itemStats[key]:match("^(.*),(.*),(.*)$")
-    res.market3 = self:ahStrToNum(market3)
-    res.market14 = self:ahStrToNum(market14)
-    res.maxStock = self:ahStrToNum(maxStock)
+    if itemStats then
+      local key = string.sub(ikey, 2)
+      local market3, market14, maxStock = itemStats[key]:match("^(.*),(.*),(.*)$")
+      res.market3 = self:ahStrToNum(market3)
+      res.market14 = self:ahStrToNum(market14)
+      res.maxStock = self:ahStrToNum(maxStock)
+    end
     -- ahbot
     for seller, auctionsBySeller in pairs(res.rawData) do
       res.numSellers = res.numSellers + 1
