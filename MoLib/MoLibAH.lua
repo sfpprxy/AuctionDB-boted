@@ -115,11 +115,12 @@ function ML:AHGetAuctionInfoByLink(itemLink)
     local itemStats = self.savedVar["itemStats"]
     if itemStats then
       local key = string.sub(ikey, 2)
-      local vIndex, maxStock, market, marketD, auctions, qty, itemClass, subClass =
-      itemStats[key]:match("^(.*),(.*),(.*),(.*),(.*),(.*),(.*),(.*)$")
+      local vIndex, maxStock, market, change, marketD, auctions, qty, itemClass, subClass =
+      itemStats[key]:match("^(.*),(.*),(.*),(.*),(.*),(.*),(.*),(.*),(.*)$")
       res.vIndex = self:ahStrToNum(vIndex)
       res.maxStock = self:ahStrToNum(maxStock)
       res.market = self:ahStrToNum(market)
+      res.change = self:ahStrToNum(change)
       res.marketD = self:ahStrToNum(marketD)
       res.auctions = self:ahStrToNum(auctions)
       res.qty = self:ahStrToNum(qty)
