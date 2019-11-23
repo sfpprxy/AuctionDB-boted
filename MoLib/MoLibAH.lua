@@ -500,7 +500,7 @@ end
 
 function ML:ahStrToNum(numS)
   if not numS or #numS == 0 then
-    return nil
+    return 0
   end
   return tonumber(numS)
 end
