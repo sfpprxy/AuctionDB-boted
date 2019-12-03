@@ -115,17 +115,29 @@ function ML:AHGetAuctionInfoByLink(itemLink)
     local itemStats = self.savedVar["itemStats"]
     if itemStats then
       local key = string.sub(ikey, 2)
-      local vIndex, maxStock, market, change, marketD, auctions, qty, itemClass, subClass =
-      itemStats[key]:match("^(.*),(.*),(.*),(.*),(.*),(.*),(.*),(.*),(.*)$")
-      res.vIndex = self:ahStrToNum(vIndex)
-      res.maxStock = self:ahStrToNum(maxStock)
-      res.market = self:ahStrToNum(market)
-      res.change = self:ahStrToNum(change)
-      res.marketD = self:ahStrToNum(marketD)
-      res.auctions = self:ahStrToNum(auctions)
-      res.qty = self:ahStrToNum(qty)
-      res.itemClass = itemClass
-      res.subClass = subClass
+      if itemStats[key] then
+        local vIndex, maxStock, market, change, marketD, auctions, qty, itemClass, subClass =
+        itemStats[key]:match("^(.*),(.*),(.*),(.*),(.*),(.*),(.*),(.*),(.*)$")
+        res.vIndex = self:ahStrToNum(vIndex)
+        res.maxStock = self:ahStrToNum(maxStock)
+        res.market = self:ahStrToNum(market)
+        res.change = self:ahStrToNum(change)
+        res.marketD = self:ahStrToNum(marketD)
+        res.auctions = self:ahStrToNum(auctions)
+        res.qty = self:ahStrToNum(qty)
+        res.itemClass = itemClass
+        res.subClass = subClass
+      else
+        res.vIndex = 0
+        res.maxStock = 0
+        res.market = 0
+        res.change = 0
+        res.marketD = 0
+        res.auctions = 0
+        res.qty = 0
+        res.itemClass = "未知"
+        res.subClass = "未知"
+      end
     end
     -- ahbot
     for seller, auctionsBySeller in pairs(res.rawData) do
